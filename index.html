@@ -1,31 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AAA Timesheet</title>
-  <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#3f6b38">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Timesheet">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <link rel="apple-touch-icon" href="icon-180.png?v=2">
-  <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png?v=2">
-  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=2">
-  <link rel="manifest" href="manifest.webmanifest?v=2">
-  <meta http-equiv="refresh" content="0; url=https://script.google.com/macros/s/AKfycbw9AqalkPA6WUunstccDG0rAM35Af2DMM2DrfEct7-KRk_LPrco2eHtV4CAm2h4malriQ/exec">
-  <style>
-    body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #f2f5ef; color: #22301f; font-family: Georgia, serif; }
-    a { color: #3f6b38; }
-  </style>
-</head>
-<body>
-  <p>Opening <a href="https://script.google.com/macros/s/AKfycbw9AqalkPA6WUunstccDG0rAM35Af2DMM2DrfEct7-KRk_LPrco2eHtV4CAm2h4malriQ/exec">AAA Timesheet</a>…</p>
-  <script>
-    // Home-screen launcher: this page exists only so iOS/Android read our icon
-    // from a top-level document (Apps Script wraps the app in Google's page).
-    location.replace('https://script.google.com/macros/s/AKfycbw9AqalkPA6WUunstccDG0rAM35Af2DMM2DrfEct7-KRk_LPrco2eHtV4CAm2h4malriQ/exec');
-  </script>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>AAA Timesheet</title>
+    <meta name="robots" content="noindex">
+    <meta name="color-scheme" content="light only">
+    <meta name="theme-color" content="#f2f5ef">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Timesheet">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="apple-touch-icon" href="icon-180.png?v=2">
+    <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png?v=2">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=2">
+    <link rel="manifest" href="manifest.webmanifest?v=3">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="app.css?v=1">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">AAA <em>Timesheet</em></div>
+    </header>
+
+    <main id="main">
+      <div class="center muted" id="loading">Loading…</div>
+
+      <div id="app" hidden>
+        <section id="clockArea"></section>
+
+        <section class="card week-head">
+          <div class="week-nav">
+            <button class="icon-btn" id="prevWeek" type="button" aria-label="Previous week">&larr;</button>
+            <div class="week-title">
+              <div class="muted small">Week of</div>
+              <div id="weekLabel" class="week-label"></div>
+            </div>
+            <button class="icon-btn" id="nextWeek" type="button" aria-label="Next week">&rarr;</button>
+          </div>
+          <div class="week-sub">
+            <button class="link" id="thisWeek" type="button" hidden>Back to this week</button>
+            <label class="link jump">Jump to date<input type="date" id="jumpDate"></label>
+          </div>
+          <div class="total-row">
+            <div>
+              <span class="big" id="weekTotal">0.0</span><span class="big-unit">hours</span>
+            </div>
+            <div class="report-box">
+              <span class="chip" id="reportChip"></span>
+              <div class="muted small" id="reportChanged" hidden>Changed since last sent</div>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn" id="previewBtn" type="button">Preview report</button>
+            <button class="btn primary" id="sendBtn" type="button" hidden>Send report</button>
+          </div>
+          <div class="notice" id="lockNotice" hidden></div>
+        </section>
+
+        <section class="card ledger" id="days"></section>
+      </div>
+    </main>
+
+    <button class="fab" id="fab" type="button" hidden aria-label="Add entry">+ Add entry</button>
+
+    <div class="overlay" id="overlay" hidden>
+      <div class="sheet" role="dialog" aria-modal="true" id="sheet"></div>
+    </div>
+    <div class="toast" id="toast" hidden></div>
+
+    <script src="app.js?v=1"></script>
+  </body>
 </html>
